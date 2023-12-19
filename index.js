@@ -1,5 +1,5 @@
 const express = require("express");
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, MongoCryptAzureKMSRequestError } = require('mongodb');
 
 require('dotenv').config();
 const cors = require("cors");
@@ -12,9 +12,9 @@ const port = process.env.PORT || 5000;
 // middleware
 app.use(cors({
   origin: [
-      // 'http://localhost:5173',
-      'https://school-management-25b37.web.app',
-      'https://school-management-25b37.firebaseapp.com'
+      'http://localhost:5173',
+      // 'https://school-management-25b37.web.app',
+      // 'https://school-management-25b37.firebaseapp.com'
 
   ],
   credentials: true
@@ -113,6 +113,11 @@ const verifyAdmin = async (req, res, next) => {
 }
 
     // user related api
+    app.get('/users', async(req, res) => {
+      const result = await userCollection.find().toArray();
+      res.send(result);
+    })
+
     app.post('/users', verifyToken, async(req, res) => {
         const user = req.body;
 
