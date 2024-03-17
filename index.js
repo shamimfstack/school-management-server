@@ -45,6 +45,7 @@ async function run() {
 
     const userCollection = client.db("schoolDB").collection("users");
     const studentCollection = client.db("schoolDB").collection("students");
+    const teachersCollection = client.db("schoolDB").collection("teachers");
     const announcementCollection = client.db("schoolDB").collection("announcements");
 
     // jwt related api
@@ -178,6 +179,14 @@ async function run() {
       const data = req.body;
       console.log(data);
       const result = await announcementCollection.insertOne(data);
+      res.send(result);
+    })
+
+    // teacher related api
+
+    app.post("/addTeachers", async(req, res) => {
+      const newTeacher = req.body;
+      const result = await teachersCollection.insertOne(newTeacher);
       res.send(result);
     })
 
