@@ -183,6 +183,10 @@ async function run() {
     })
 
     // teacher related api
+    app.get("/allTeachers", async(req, res) => {
+      const result = await teachersCollection.find().toArray();
+      res.send(result);
+    })
 
     app.post("/addTeachers", async(req, res) => {
       const newTeacher = req.body;
